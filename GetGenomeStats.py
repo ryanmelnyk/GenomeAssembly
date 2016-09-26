@@ -34,7 +34,7 @@ def parse_seqs(fastafile,prefix,len_cutoff,cov_cutoff):
 		else:
 			leng[contigname] = math.log(int(vals[3]),10)
 			cov[contigname] = float(vals[5])
-		if leng[contigname] > len_cutoff and cov[contigname] > cov_cutoff:
+		if leng[contigname] > math.log(len_cutoff,10) and cov[contigname] > cov_cutoff:
 			SeqIO.write(seq,o,'fasta')
 	d = {'log10length':pd.Series(leng),'coverage':pd.Series(cov)}
 	o.close()
