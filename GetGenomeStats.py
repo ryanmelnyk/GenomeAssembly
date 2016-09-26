@@ -23,7 +23,6 @@ fasta-formatted file with a SPAdes format header.
 
 def parse_seqs(fastafile,prefix,len_cutoff,cov_cutoff):
 	o = open(prefix+".filteredcontigs.fna",'w')
-	contigcount = 0
 	leng = {}
 	cov = {}
 	for seq in SeqIO.parse(open(fastafile,'r'),'fasta'):
@@ -35,6 +34,8 @@ def parse_seqs(fastafile,prefix,len_cutoff,cov_cutoff):
 			leng[contigname] = math.log(int(vals[3]),10)
 			cov[contigname] = float(vals[5])
 		if leng[contigname] > math.log(len_cutoff,10) and cov[contigname] > cov_cutoff:
+			seq.id = "{}_contig{}".format(os.path.basename(prefix),vals[1])
+			seq.description = ""
 			SeqIO.write(seq,o,'fasta')
 	d = {'log10length':pd.Series(leng),'coverage':pd.Series(cov)}
 	o.close()
