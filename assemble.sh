@@ -1,11 +1,6 @@
 #!/bin/bash
-#PBS -r n
-#PBS -N Assemble409
-#PBS -l walltime=100:00:00
-#PBS -l procs=8
-#PBS -l pmem=16000m
-#!/bin/bash
-file=../assemblies/WCS365
+file=../assemblies/CH409
+strain=CH409
 adapt=~/compbio/adapters/illumina_adapters.fa
 
 scythe -a $adapt $file.1.fastq -o $file.scythed.1.fastq -q sanger
@@ -18,3 +13,7 @@ pear -f $file.sickled.1.fastq -r $file.sickled.2.fastq -o $file -j 8
 cat $file.singles.fastq $file.assembled.fastq > $file.all.singles.fastq
 
 spades.py -m 16 -s $file.all.singles.fastq -1 $file.unassembled.forward.fastq -2 $file.unassembled.reverse.fastq --careful --cov-cutoff auto -t 8 -o $file
+
+## filter contigs using 
+
+prokka --genus Pseudomonas --strain $strain --locustag $strain --prefix $strain --cpus 8 --outdir $file.prokka $file.filteredcontigs.fna
