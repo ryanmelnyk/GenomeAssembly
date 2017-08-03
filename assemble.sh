@@ -1,5 +1,5 @@
 #!/bin/bash
-file=../assemblies/CH409
+file=~/compbio/assemblies/CH409
 strain=CH409
 adapt=~/compbio/adapters/illumina_adapters.fa
 
@@ -14,6 +14,6 @@ cat $file.singles.fastq $file.assembled.fastq > $file.all.singles.fastq
 
 spades.py -m 16 -s $file.all.singles.fastq -1 $file.unassembled.forward.fastq -2 $file.unassembled.reverse.fastq --careful --cov-cutoff auto -t 8 -o $file
 
-## filter contigs using 
+## use GetGenomeStats.py to identify appropriate cutoffs for contig length and coverage
 
 prokka --genus Pseudomonas --strain $strain --locustag $strain --prefix $strain --cpus 8 --outdir $file.prokka $file.filteredcontigs.fna
