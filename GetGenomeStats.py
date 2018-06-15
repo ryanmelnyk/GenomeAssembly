@@ -72,14 +72,10 @@ def parse_seqs(outdir,prefix,len_cutoff,cov_cutoff):
 						genera[vals[0]] = 1
 					else:
 						genera[vals[0]] += 1
-		# print c
-		# for g in genera:
-		# 	print "\t", g, genera[g]
 		try:
 			annotations[contigname] = sorted(genera.items(), reverse = True, key= lambda (k,v): v)[0][0]
 		except IndexError:
 			annotations[contigname] = "None"
-	print annotations
 
 	annot_counts = {}
 	for a in annotations:
