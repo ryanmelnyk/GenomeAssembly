@@ -1,7 +1,7 @@
 #!/bin/bash
-file=~/compbio/assemblies/CH409
-strain=CH409
-adapt=~/compbio/adapters/illumina_adapters.fa
+file=rawdata/$1
+strain=$1
+adapt=~/compbio/adapters/truseq_adapters.fasta
 
 scythe -a $adapt $file.1.fastq -o $file.scythed.1.fastq -q sanger
 scythe -a $adapt $file.2.fastq -o $file.scythed.2.fastq -q sanger
@@ -16,4 +16,4 @@ spades.py -m 16 -s $file.all.singles.fastq -1 $file.unassembled.forward.fastq -2
 
 ## use GetGenomeStats.py to identify appropriate cutoffs for contig length and coverage
 
-prokka --genus Pseudomonas --strain $strain --locustag $strain --prefix $strain --cpus 8 --outdir $file.prokka $file.filteredcontigs.fna
+## prokka --genus Pseudomonas --strain $strain --locustag $strain --prefix $strain --cpus 8 --outdir $file.prokka $file.filteredcontigs.fna
